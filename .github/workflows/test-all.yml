@@ -1,0 +1,39 @@
+name: Run Palindrome Tests
+
+on:
+  push:
+    paths:
+      - 'main/**'
+      - 'tests/**'
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Run Python Test
+      run: |
+        echo "Running Python Test"
+        python3 tests/test.py
+
+    - name: Compile and Run C
+      run: |
+        echo "Running C Test"
+        gcc main/main.c tests/test.c -o test_c
+        ./test_c
+
+    - name: Compile and Run C++
+      run: |
+        echo "Running C++ Test"
+        g++ main/main.cpp tests/test.cpp -o test_cpp
+        ./test_cpp
+
+    - name: Compile and Run Java
+      run: |
+        echo "Running Java Test"
+        javac main/Main.java tests/Test.java
+        java -cp main:tests Test
